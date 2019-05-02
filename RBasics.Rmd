@@ -1,0 +1,207 @@
+---
+title: "R Basics Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+plot(cars)
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+
+
+
+
+#Arithmetic operations
+```{r}
+x <- 10
+y <- 2
+
+x+y
+x-y
+x*y
+x/y
+x%%y
+x^y
+x%/%y
+
+```
+
+#Relational Operations
+```{r}
+x <- 10
+y <- 2
+
+x<y
+x>y
+x==y
+x>=y
+x<=y
+x!=y
+```
+
+#Logical Operations
+```{r}
+x <- c(TRUE, FALSE, 0, "hi") # - the whole vector is treated as vector of character
+x <- c(TRUE, FALSE, 0, 6)
+y <- c(TRUE, TRUE, TRUE, FALSE)
+
+x
+y
+x&y #Element-wise logical And
+x&&y #Logical And for the first element
+x|y #Element-wise Logical OR
+x||y #First element Logical OR
+```
+
+Vector Assignment and Coercion
+```{r}
+x <- c(0,1,2,3,4)
+typeof(x)
+```
+```{r}
+x <- c(0,1.2,3,5.7)
+typeof(x)
+```
+```{r}
+x <- c(0,1,3,TRUE,"hello")
+typeof(x)
+```
+
+Using seq() function to create a vector
+```{r}
+seq(1,5,by=0.2)
+```
+```{r}
+seq(1,5,length.out = 4)
+```
+
+Accessing Elements in Vector
+```{r}
+x <- seq(1,5, by=0.5)
+x[1]
+x[1.5]
+x[c(1,4)]
+x[-1]
+x[1,4] #multiple indices should be used using vector notation
+x[c(4,-1)] #throws an error- cannot mix positive and negative indices
+
+```
+Logical access and modification
+
+```{r}
+x[x<3] <- 2
+x
+```
+
+Character access
+```{r}
+x <- c("first"=1, "second"=2, "third"=3)
+x["first"]
+x[c("first","second")]
+```
+
+sorting the vector
+```{r}
+sort(x, decreasing = TRUE)
+```
+
+```{r}
+x <- c("first"=1, "second"=2, "third"=3, NA )
+sum(x, na.rm = TRUE) #removes NA values to calculate sum
+x
+```
+
+Lists
+```{r}
+nlst <- list(one = 1, two = c("Hello","World"),many = c(3, 4, 5))
+nlst
+x <- list("a" = 2.5, "b" = TRUE, "c" = 1:3)
+str(x)
+length(x)
+
+x[c(1:2)]    # index using integer vector 
+x[-2]        # using negative integer to exclude second component
+x[c(T,F,F)]  # index using logical vector
+x[c("a","c")]
+
+typeof(x["a"])
+
+x[["c"]]
+x$c
+x$c[3]
+```
+
+
+Matrices and Operations
+```{r}
+y= matrix(1:9, nrow = 3, ncol = 3)
+y
+y[c(1,2),c(2,3)] # selecting a section of matrix rows and columns
+z =  matrix(1:9, nrow = 3, ncol = 3, byrow = TRUE)
+z
+z[c(3,2),]    # leaving column field blank will select entire columns
+
+z[,]    # leaving row as well as column field blank will select entire matrix
+
+z[-1,]    # select all rows except first
+
+z[z<5] <- 0; z #assigning based on condition and adding a statement in the same line by using ; as separator
+```
+
+```{r}
+x2 <- matrix(1:9, nrow = 3, dimnames = list(c("X","Y","Z"), c("A","B","C"))) #name the rows and columns of matrix
+x2
+colnames(x2)
+rownames(x2)
+cbind(c(1,2,3),c(4,5,6)) #another way of creating matrix column bind
+rbind(c(1,2,3),c(4,5,6))  #another way of creating matrix row bind
+
+```
+Transpose of a matrix
+```{r}
+t(x2)
+dim(x2)
+
+dim(x2) <- c(9,1); x2
+```
+
+DataFrames
+```{r}
+x4 <- data.frame("SN" = 1:2, "Age" = c(21,15), "Name" = c("John","Dora"))
+x4
+typeof(x4$Name)
+
+x3 <- data.frame("SN" = 1:2, "Age" = c(21,15), "Name" = c("John", "Dora"), stringsAsFactors = FALSE)
+x3
+typeof(x3$Name)
+
+names(x3)
+str(x3)
+
+ncol(x3)
+
+nrow(x3)
+
+head(x3, n=1)
+head(x3) #Generally returns top 6
+```
+
+```{r}
+x3[x3$Age > 16,3]
+x3[x3$Age > 16,]
+```
+
+```{r}
+x3 <- x3[order(x3$Age, decreasing = FALSE),]
+x3
+```
+
